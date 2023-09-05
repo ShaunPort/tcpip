@@ -2,9 +2,10 @@ package tcpip_test
 
 import (
 	"net"
-	"tcpip"
 
 	"testing"
+
+	"github.com/ShaunPort/tcpip"
 )
 
 func TestInt32ToIP(t *testing.T) {
