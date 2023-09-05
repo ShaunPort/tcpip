@@ -98,27 +98,20 @@ func SumIP(ip net.IP, offset int) net.IP {
 }
 
 // DiffIP 计算两个IP地址的差
-func DiffIP(s, e net.IP) (uint32, error) {
-	if s == nil || e == nil {
-		return 0, ErrNotIP
-	}
-	offset := IPToUint32(s) - IPToUint32(e)
+func DiffIP(s, e net.IP) uint32 {
 	start := IPToUint32(s)
 	end := IPToUint32(e)
 	if start > end {
-		return 0, ErrCountIPNum
+		return start - end
 	}
-	return offset, nil
+	return end - start
 }
 
 // CountIPNum 通过起始地址、结束地址计算地址总数
-func CountIPNum(startIP, endIP net.IP) (uint32, error) {
-	dif, err := DiffIP(startIP, endIP)
-	if err != nil {
-		return 0, err
-	}
+func CountIPNum(startIP, endIP net.IP) uint32 {
+	dif := DiffIP(startIP, endIP)
 	totalNum := dif + 1
-	return totalNum, nil
+	return totalNum
 }
 
 // CountHostWithIPNet 通过掩码计算得到CIDR地址范围内可拥有的主机数（去除广播地址和组播地址）
